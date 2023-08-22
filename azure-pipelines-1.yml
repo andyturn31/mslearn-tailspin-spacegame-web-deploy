@@ -1,0 +1,25 @@
+trigger:
+- main
+
+pr:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- script: |
+    echo "Terraform Init"
+    terraform init
+  displayName: 'Terraform Init'
+
+- script: |
+    echo "Terraform Plan"
+    terraform plan -out=tfplan
+  displayName: 'Terraform Plan'
+
+- script: |
+    echo "Terraform Apply"
+    terraform apply -input=false tfplan
+  displayName: 'Terraform Apply'
+  condition: and(succeeded(), eq(variables['Build.Reason'], 'Manual'))
