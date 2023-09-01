@@ -1,9 +1,3 @@
-# Generate a random integer to create a globally unique name
-resource "random_integer" "ri" {
-  min = 10000
-  max = 99999
-}
-
 # Create the resource group
 resource "azurerm_resource_group" "rg-uks" {
   name     = "rg-webapps-demo"
@@ -11,7 +5,7 @@ resource "azurerm_resource_group" "rg-uks" {
 }
 # Create the Linux App Service Plan
 resource "azurerm_app_service_plan" "appserviceplan-uks" {
-  name                = "asp-${random_integer.ri.result}-tailspin-space-game"
+  name                = "asp-andyt-tailspin-space-game"
   location            = azurerm_resource_group.rg-uks.location
   resource_group_name = azurerm_resource_group.rg-uks.name
   sku {
@@ -23,7 +17,7 @@ resource "azurerm_app_service_plan" "appserviceplan-uks" {
 # Create the DEV web app, pass in the App Service Plan ID
 resource "azurerm_app_service" "webapp-dev" {
   depends_on          = [azurerm_app_service_plan.appserviceplan-uks]
-  name                = "webapp-${random_integer.ri.result}-tailspin-space-game-DEV"
+  name                = "webapp-andyt-tailspin-space-game-DEV"
   location            = azurerm_resource_group.rg-uks.location
   resource_group_name = azurerm_resource_group.rg-uks.name
   app_service_plan_id = azurerm_app_service_plan.appserviceplan-uks.id
@@ -38,7 +32,7 @@ resource "azurerm_app_service" "webapp-dev" {
 # Create the TEST web app, pass in the App Service Plan ID
 resource "azurerm_app_service" "webapp-test" {
   depends_on          = [azurerm_app_service_plan.appserviceplan-uks]
-  name                = "webapp-${random_integer.ri.result}-tailspin-space-game-TEST"
+  name                = "webapp-andyt-tailspin-space-game-TEST"
   location            = azurerm_resource_group.rg-uks.location
   resource_group_name = azurerm_resource_group.rg-uks.name
   app_service_plan_id = azurerm_app_service_plan.appserviceplan-uks.id
@@ -54,7 +48,7 @@ resource "azurerm_app_service" "webapp-test" {
 # Create the STAGING web app, pass in the App Service Plan ID
 resource "azurerm_app_service" "webapp-staging" {
   depends_on          = [azurerm_app_service_plan.appserviceplan-uks]
-  name                = "webapp-${random_integer.ri.result}-tailspin-space-game-STAGING"
+  name                = "webapp-andyt-tailspin-space-game-STAGING"
   location            = azurerm_resource_group.rg-uks.location
   resource_group_name = azurerm_resource_group.rg-uks.name
   app_service_plan_id = azurerm_app_service_plan.appserviceplan-uks.id
